@@ -1,0 +1,12 @@
+<launch>
+  <arg name="api_key" default=""/>
+  <arg name="model_name" default="text-davinci-003"/>
+  
+  <node name="behavior_tree_generation" pkg="behavior_tree_generation" type="behavior_tree_generation_node.py" output="screen">
+    <!-- This param define the name of a specified rosparam to trigger behavior tree node  -->
+    <param name="trigger_rosparam" type="string" value='/LLM_generation_finished' />
+    <param name="api_key" type="string" value='$(arg api_key)' />
+    <param name="model_name" type="string" value='$(arg model_name)' />
+  </node>
+  
+</launch>
