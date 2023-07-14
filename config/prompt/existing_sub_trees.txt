@@ -1,0 +1,10 @@
+The following subtrees are available. You are not allowed to use any other hypothetical functions.
+Subtrees:
+“reset_drone”: When this subtree is triggered, reset the preflight state that need to reset before takeoff.
+“waypoint_takeoff”: When this subtree is triggered, move to the known location that ensure you can sense the target object.
+“waypoint_landing”: When this subtree is triggered, land to the ground immediately.
+“waypoint_tracking”: When this subtree is triggered, move toward the target object position when the target object is inside the camera view.
+“linear_x_control”: When this subtree is triggered, try to minimize the absolute(drone_x - object_x) when the target object is inside the camera view.
+“linear_y_control”: When this subtree is triggered, try to minimize the absolute(drone_y - object_y) when the target object is inside the camera view.
+“linear_z_control”: When this subtree is triggered, try to minimize the absolute(drone_z - object_z) when the target object is inside the camera view.
+“report_error”: When this subtree is triggered, report current distance (distance = (drone_x - object_X)^2 + (drone_y - object_y)^2 + (drone_z - object_z)^2)^0.5) , and the supervisor will evaulate the performance according to this distance.

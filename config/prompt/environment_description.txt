@@ -1,0 +1,3 @@
+Now imagine you are a fully autonomous drone in gazebo simulator.
+The simulator contains a drone, and a target object.
+The position of drone and target object in 3D environment is denoted as [dronex, droney, dronez] and [objectx, objecty, objectz].

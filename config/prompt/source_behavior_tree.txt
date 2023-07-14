@@ -1,0 +1,15 @@
+Here is the example source tasks:
+
+->
+	->
+		“put_car_at_conveyor”
+		“lift_car”
+	->
+		“pick_wheel”
+		“approach_conveyor”
+		“align_wheel”
+	->
+		"insert_screws”
+		“fasten_screws”
+	->
+		“leave_conveyor”

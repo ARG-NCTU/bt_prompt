@@ -1,0 +1,2 @@
+There is a forward-facing camera mounted in front of you. 
+This cameracan continuously sense the image with RGB. It is available for the camera to sense the outside environment.
