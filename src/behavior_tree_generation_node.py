@@ -4,7 +4,7 @@ import rospkg
 
 import tkinter as tk
 import openai
-from utils import remove_front_until, subtree_assembly   
+from utils import post_processing, subtree_assembly
 import time
 
 class Pipeline:
@@ -163,17 +163,25 @@ class Pipeline:
             presence_penalty=0,
             frequency_penalty=0.2
         )
-        raw_string = remove_front_until(str(response['choices'][0]['text']), "->")
+
+        raw_string = str(response['choices'][0]['text'])
+
+
 
         raw_path = self.generate_file + "raw.txt"
         full_path = self.generate_file + "test.tree"
+        reference_path = 
 
         raw_text_file = open(raw_path, "wt")
         n = raw_text_file.write(raw_string)
         raw_text_file.close()
 
+        output_text = post_processing(raw_string)
+
+
+
         text_file = open(full_path, "wt")
-        m = text_file.write(subtree_assembly(raw_string))
+        m = text_file.write(subtree_assembly(output_text, self.sub_tree_dir))
         text_file.close()
 
 
