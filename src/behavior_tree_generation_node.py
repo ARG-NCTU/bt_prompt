@@ -170,7 +170,6 @@ class Pipeline:
 
         raw_path = self.generate_file + "raw.txt"
         full_path = self.generate_file + "test.tree"
-        reference_path = 
 
         raw_text_file = open(raw_path, "wt")
         n = raw_text_file.write(raw_string)
