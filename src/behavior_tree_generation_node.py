@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-import rospy
-import rospkg
-
-import tkinter as tk
-import openai
-from utils import post_processing, subtree_assembly
+import os
 import time
+import tkinter as tk
+
+import openai
+import rospkg
+import rospy
+from utils import post_processing, subtree_assembly
+
 
 class Pipeline:
     def __init__(self, generate_file, prompt_dir, sub_tree_dir, api_key, model_name):
@@ -154,6 +156,8 @@ class Pipeline:
 
     def LLM_generation(self):
         openai.api_key = self.api_key
+        with open(self.generate_file + "prompt.txt", "wt+") as file:
+            file.write(self.final_prompt)
         response = openai.Completion.create(
             model=self.model_name,
             prompt=self.final_prompt,
@@ -166,12 +170,11 @@ class Pipeline:
 
         raw_string = str(response['choices'][0]['text'])
 
-
-
+        os.makedirs(self.generate_file, exist_ok=True)
         raw_path = self.generate_file + "raw.txt"
         full_path = self.generate_file + "test.tree"
 
-        raw_text_file = open(raw_path, "wt")
+        raw_text_file = open(raw_path, "wt+")
         n = raw_text_file.write(raw_string)
         raw_text_file.close()
 
