@@ -1,0 +1,14 @@
+<launch>
+  <arg name="model_name" default="text-davinci-003"/>
+  <arg name="generation_name" default="test"/>
+  <arg name="count" default="30"/>
+  <arg name="generate_time_interval" default="0"/>
+
+  <node name="behavior_tree_generation" pkg="behavior_tree_generation" type="parse_all.py" output="screen">
+    <param name="generation_name" value="$(arg generation_name)" />
+    <param name="model_name" value="text-davinci-003" />
+    <param name="count" value="$(arg count)"/>
+    <param name="generate_time_interval" value="$(arg generate_time_interval)"/>
+  </node>
+
+</launch>
