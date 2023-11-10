@@ -1,0 +1,6 @@
+Task description:
+Now you already in the air, don't need to takeoff. This solar panel array is 30 meters wide and 50 meters long. 
+I want you to fly the drone in a lawnmower pattern above this array of solar panels to inspect them at an altitude of 5 meters.
+
+
+And here are the corresponding responses (with wrong and right format seperated by '-'):

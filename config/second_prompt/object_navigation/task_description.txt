@@ -1,0 +1,5 @@
+Task description:
+Now you already in the air, don't need to takeoff. I need you to help me find an object. Objects might be scattered around the scene, so if you don't find it right away, a good strategy is to turn around a few times to see if it becomes visible.I want to explore and find the red ball.
+
+
+And here are the corresponding responses (with wrong and right format seperated by '-'):

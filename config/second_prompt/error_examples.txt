@@ -1,0 +1,104 @@
+
+
+Extract some snippets of behavior tree syntax structure common error examples (seperated by '#'):
+
+###############################################################################################################################
+
+Error example 1: We need to ensure the structure follows the predefined behavior tree architecture.
+
+Task: Lawnmower pattern Inspection of Solar Panels
+
+Procedure:
+
+Phase 1: Takeoff and Prepare for Inspection
+
+Subtree: "object_in_view" (Check if any solar panel is in view)
+Condition: If a solar panel is in view, go to Phase 3
+Condition: If no solar panel is in view, go to Phase 2
+(Omitted below)
+
+###############################################################################################################################
+
+Error example 2: Braces "{" should not be moved to a new line, and non-text elements should not be placed immediately after "}".
+
+Task: Inspect Solar Panel Array
+Procedure:
+{
+	Do phase 1:
+	{
+		Do phase 1-1:
+		{
+			"set_altitude"
+		}
+		Do phase 1-2 if 1-1 success:
+		{
+			"already_in_the_air"
+		}
+	}
+(Omitted below)
+
+###############################################################################################################################
+
+Error example 3: The structure should have proper "{" and "}" without additional "(", ")", or comments.
+
+Task: Inspect Solar Panels in Lawnmower pattern
+Procedure:
+	Do phase 1:
+		Do phase 1-1:
+			"set_altitude" (Set altitude to 5 meters)
+	Do phase 2:
+		Do phase 2-1:
+			"explore_pattern_block" (Follow the lawnmower pattern to explore the solar panel array)
+	Do phase 3 if 2-1 success:
+		Do phase 3-1:
+			"waypoint_landing" (Land the drone)
+
+###############################################################################################################################
+
+Error example 4: There should be no spaces between "{" and "Do", as well as between ":" and "{".
+
+Task: Inspect Solar Panels in Lawnmower pattern
+Procedure:
+{
+	Do phase 1: {
+		Do phase 1-1: {
+			"set_altitude"
+		} Do phase 1-2 if 1-1 success: {
+			"already_in_the_air"
+		}
+
+(Omitted below)
+
+###############################################################################################################################
+
+Error example 5: "Procedure:" should be followed by "{" and "}", with proper indentation.
+
+Task: Explore and Find Red Ball
+Procedure:
+
+Do phase 1:
+{
+
+(Omitted below)
+
+###############################################################################################################################
+
+Error example 6: "subtree" should not be followed by ":{}" and the description within the subtree is unnecessary.
+
+Task: Explore and Find Red Ball
+Procedure:
+{
+    Do phase 1:
+    {
+        Do phase 1-1:
+        {
+            "object_in_view":
+            {
+                "obj_list": ["red_ball"],
+                "obj_locs": ["red_ball_bbox"]
+            }
+
+(Omitted below)
+
+###############################################################################################################################
+

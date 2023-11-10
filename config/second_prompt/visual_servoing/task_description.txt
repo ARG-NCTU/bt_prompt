@@ -1,0 +1,5 @@
+Task description:
+Now you already in the air, don't need to takeoff. And the ball is aleady in your view, don't need any exloration behaviors. Please executes a visual servoing approach towards the ball.
+
+
+And here are the corresponding responses (with wrong and right format seperated by '-'):

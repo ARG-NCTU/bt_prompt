@@ -1,0 +1,64 @@
+Task: change wheel for a car
+Procedure:{
+    Do phase 1:{
+        Do phase 1-1:{
+            "put_car_at_conveyor"
+        }Do phase 1-2 if 1-1 success:{
+            "lift_car"
+        }
+    }Do phase 2 if 1 success:{
+        Do phase 2-1:{
+            "pick_wheel"
+        }Do phase 2-2 if 2-1 success:{
+            "approach_conveyor"
+        }
+    }Do phase 3 if 2 success:{
+        Do phase 3-1 at the same time:{
+            "align_wheel_in_x_axis"
+            "align_wheel_in_y_axis"
+        }
+    }Do phase 4 if 3 success:{
+        Do phase 4-1:{
+            "insert_screws"
+        }Do phase 4-2 if 4-1 success:{
+            "fasten_screws"
+        }
+    }Do phase 5 if 4 success:{
+        Do phase 5-1:{
+            "leave_conveyor"
+        }
+    }
+}
+
+Task: Take off and fly to the desired destination. After reach the destination, go home.
+Procedure:{
+    Do phase 1:{
+        Do phase 1-1:{
+            "already_visited_destination"
+        }Do phase 1-2 if 1-1 success:{
+            "already_at_home"
+        }Do phase 1-3 if 1-2 success:{
+            "land"
+        }
+    }Do phase 2 if 1 failed:{
+        Do phase 2-1:{
+            Do phase 2-1-1:{
+                "already_in_the_air"
+            }Do phase 2-1-2 if 2-1-1 success:{
+                "takeoff"
+            }
+        }Do phase 2-2 if 2-1 success:{
+            Do phase 2-2-1:{
+                "already_visited_destination"
+            }Do phase 2-2-2 if 2-2-1 success:{
+                "go_to_destination"
+            }
+        }Do phase 2-3 if 2-2 success:{
+            Do phase 2-3-1:{
+                "already_at_home"
+            }Do phase 2-3-2 if 2-3-1 success:{
+                "go_home"
+            }
+        }
+    } 
+}
