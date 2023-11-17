@@ -78,7 +78,7 @@ if __name__ == "__main__":
     model_name = rospy.get_param("~model_name", "")
     count = rospy.get_param("~count", 30)
     generate_time_interval = rospy.get_param("~generate_time_interval", 20)
-    generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "exp", "L",generation_name)
+    generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "llm-bt-gpt", "gpt3_test", "L",generation_name)
     sleep_seperate = rospy.get_param("~sleep_seperate", 100)
 
     sub_tree_dir = rospack.get_path("behavior_tree_generation") + "/config/subtree/"

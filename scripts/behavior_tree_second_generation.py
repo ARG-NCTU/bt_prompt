@@ -59,14 +59,10 @@ if __name__ == "__main__":
 
     generation_name = rospy.get_param("~generation_name", "test")
     model_name = rospy.get_param("~model_name", "")
-    # count = rospy.get_param("~count", 30)
-    generate_time_interval = rospy.get_param("~generate_time_interval", 20)
     src_generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "llm-bt-gpt", "gpt3.5_online",generation_name)
     dst_generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "llm-bt-gpt", "gpt3.5_online_2", "M+L",generation_name)
     if not os.path.exists(dst_generate_dir):
         os.makedirs(dst_generate_dir)
-    
-    # sleep_seperate = rospy.get_param("~sleep_seperate", 100)
 
     sub_tree_dir = rospack.get_path("behavior_tree_generation") + "/config/subtree/"
 
@@ -80,15 +76,10 @@ if __name__ == "__main__":
         "dst_generate_dir": dst_generate_dir,
         "wrong_raw_indices": wrong_raw_indices,
         "model_name": model_name,
-        "generate_time_interval": generate_time_interval,
-        # "sleep_seperate": sleep_seperate,
         "prompt_description_dir": prompt_description_dir,
         "generation_name": generation_name,
         "sub_tree_dir": sub_tree_dir,
     }
     args = Args(args)
 
-    # for i in range(count):
     LLM_generation(args)
-    # if rospy.is_shutdown():
-    #     break

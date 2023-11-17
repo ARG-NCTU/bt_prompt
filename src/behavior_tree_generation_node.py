@@ -155,7 +155,8 @@ class Pipeline:
             raise NotImplementedError
 
     def LLM_generation(self):
-        openai.api_key = self.api_key
+        # openai.api_key = self.api_key
+        openai.api_key = os.environ["OPENAI_API_KEY"]
         with open(self.generate_file + "prompt.txt", "wt+") as file:
             file.write(self.final_prompt)
         response = openai.Completion.create(
