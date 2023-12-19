@@ -1,0 +1,15 @@
+<launch>
+  <arg name="task" default="wildlife" />
+  <arg name="model_name" default="text-davinci-003" />
+  <arg name="dialogue_num" default="20" />
+  <arg name="temperature" default="0.0" />
+
+  <node name="behavior_tree_generation_multi_dialogue" pkg="behavior_tree_generation"
+    type="behavior_tree_generation_multi_dialogue.py" output="screen">
+    <param name="task_chat_folder" value='$(find behavior_tree_generation)/chat/$(arg task)' />
+    <param name="dialogue_num" value="$(arg dialogue_num)" />
+    <param name="model_name" value="$(arg model_name)" />
+    <param name="temperature" value="$(arg temperature)" />
+  </node>
+
+</launch>
