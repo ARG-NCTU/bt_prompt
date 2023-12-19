@@ -1,6 +1,6 @@
 <launch>
-  <arg name="task" default="wildlife" />
-  <arg name="model_name" default="text-davinci-003" />
+  <arg name="task" default="follow" />
+  <arg name="model_name" default="gpt-3.5-turbo" />
   <arg name="dialogue_num" default="20" />
   <arg name="temperature" default="0.0" />
 
