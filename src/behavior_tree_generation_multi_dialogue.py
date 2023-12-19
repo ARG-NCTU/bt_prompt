@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 import os
 
 import openai
@@ -42,39 +43,51 @@ class MultiDialogue:
         rospy.logwarn("============Start============")
 
         messages = {}
+        full_messages = self.read_messages()
+        rospy.loginfo("{} messages, {} full messages".format(len(messages), len(full_messages)))
 
-        while True:
+        while not rospy.is_shutdown():
             func = input("Enter function: ")
             if func == "q":
                 rospy.logwarn("============Quit============")
                 break
             elif func == "c":
-                new_messages = self.read_messages()
-                if len(new_messages) > len(messages):
-                    messages = new_messages
-                elif len(new_messages) < len(messages):
-                    rospy.logwarn("Some messages are deleted")
-                    messages = new_messages
+                new_full_messages = self.read_messages()
+                if len(new_full_messages) > len(full_messages):
+                    rospy.logwarn("{} messages are added".format(len(new_full_messages) - len(full_messages)))
+                    full_messages = new_full_messages
+                elif len(new_full_messages) < len(full_messages):
+                    rospy.logwarn("{} messages are deleted".format(len(full_messages) - len(new_full_messages)))
+                    full_messages = new_full_messages
                 else:
                     rospy.logwarn("No new messages")
-                    continue
+                    full_messages = new_full_messages
+                messages = [full_messages[0], full_messages[-2], full_messages[-1]]
+                rospy.loginfo("{} messages, {} full messages".format(len(messages), len(full_messages)))
                 self.print_messages(messages)
             elif func == "s":
-                if len(messages) % 2 == 0:
-                    rospy.logwarn("No new user message")
+                if len(messages) < 3:
+                    rospy.logerr("{} messages are not enough".format(len(messages)))
                     continue
+                if messages[0]["role"] != "user":
+                    rospy.logerr("First message is not user")
+                    continue
+                if messages[1]["role"] != "assistant":
+                    rospy.logerr("Second message is not assistant")
+                    continue
+                if messages[2]["role"] != "user":
+                    rospy.logerr("Third message is not user")
+                    continue
+                rospy.logwarn("============Send============")
                 try:
                     response = openai_client.chat.completions.create(
                         model=self.args.model_name, messages=messages, temperature=self.args.temperature
                     )
-                    print(response)
-                    self.write_response(response, len(messages) / 2)
-                    self.write_assistant_message(str(response.choices[0].message.content), len(messages) / 2)
+                    self.write_response(str(response), len(full_messages) / 2)
+                    self.write_assistant_message(str(response.choices[0].message.content), len(full_messages) / 2)
                 except Exception as e:
                     rospy.logerr(e)
                     continue
-            elif func == "h":
-                self.print_messages(messages)
 
     def read_mesaage(self, role, file_name):
         message = {}
@@ -96,15 +109,18 @@ class MultiDialogue:
         for i in range(self.args.dialogue_num):
             role = "user"
             file_name = "{}/{}_0_{}.txt".format(self.args.task_chat_folder, i, role)
-            message = self.read_mesaage(role, file_name)
-            if message["content"] != "":
-                messages.append(message)
+            message_user = self.read_mesaage(role, file_name)
+            if message_user["content"] != "":
+                messages.append(message_user)
 
             role = "assistant"
             file_name = "{}/{}_1_{}.txt".format(self.args.task_chat_folder, i, role)
-            message = self.read_mesaage(role, file_name)
-            if message["content"] != "":
-                messages.append(message)
+            message_assistant = self.read_mesaage(role, file_name)
+            if message_assistant["content"] != "":
+                messages.append(message_assistant)
+
+            if message_user["content"] == "" or message_assistant["content"] == "":
+                break
 
         return messages
 
@@ -112,7 +128,7 @@ class MultiDialogue:
         file_name = "{}/{}_2_response.txt".format(self.args.task_chat_folder, int(i))
 
         with open(file_name, "w") as f:
-            f.write(str(response))
+            f.write(response)
 
     def write_assistant_message(self, text, i):
         file_name = "{}/{}_1_assistant.txt".format(self.args.task_chat_folder, int(i))
@@ -121,9 +137,9 @@ class MultiDialogue:
             f.write(text)
 
     def print_messages(self, messages):
-        rospy.logwarn("============Messages: {}============".format(len(messages)))
+        rospy.logwarn("============Messages============")
         for message in messages:
-            rospy.loginfo(f"{message['role']}: {message['content'][:100]}")
+            rospy.loginfo(f"{message['role']}: {message['content'][:500]}")
 
 
 if __name__ == "__main__":
