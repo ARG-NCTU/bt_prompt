@@ -55,14 +55,13 @@ class MultiDialogue:
                 new_full_messages = self.read_messages()
                 if len(new_full_messages) > len(full_messages):
                     rospy.logwarn("{} messages are added".format(len(new_full_messages) - len(full_messages)))
-                    full_messages = new_full_messages
                 elif len(new_full_messages) < len(full_messages):
                     rospy.logwarn("{} messages are deleted".format(len(full_messages) - len(new_full_messages)))
-                    full_messages = new_full_messages
                 else:
                     rospy.logwarn("No new messages")
-                    full_messages = new_full_messages
-                messages = [full_messages[0], full_messages[-2], full_messages[-1]]
+                full_messages = new_full_messages
+                if len(full_messages) >= 3:
+                    messages = [full_messages[0], full_messages[-2], full_messages[-1]]
                 rospy.loginfo("{} messages, {} full messages".format(len(messages), len(full_messages)))
                 self.print_messages(messages)
             elif func == "s":
