@@ -2,7 +2,7 @@
 ![](figs/generation_ui.png)
 
 ## Before you start
-* Make sure you have the authentication to the private repos [behavior_tree](https://github.com/ARG-NCTU/behavior_tree.git) and [behavior_tree_msgs](https://github.com/ARG-NCTU/behavior_tree_msgs).
+* Make sure you have the authentication to these repos [behavior_tree](https://github.com/ARG-NCTU/behavior_tree.git) and [behavior_tree_msgs](https://github.com/ARG-NCTU/behavior_tree_msgs).
 * Clone these repos in same workspace:
 ```
 cd ${YOUR_WORKSPACE}/catkin_ws/src
@@ -28,11 +28,15 @@ or
 ```
 catkin_build -w ${YOUR_WORKSPACE}/catkin_ws
 ```
+* You need to export your OPENAI_API_KEY to environment.
+```
+export OPENAI_API_KEY=${your_key_here}
+```
 ## Params
 * There are several params in [behavior_tree_generation/launch/behavior_tree_generation.launch](https://github.com/ARG-NCTU/behavior_tree_generation/blob/master/launch/behavior_tree_generation.launch):
-    * <api_key>: An unique code that identifies your requests to the open API. 
+     
     * <trigger_rosparam>(default: /LLM_generation_finished): This param define the name of a specified rosparam to trigger behavior tree node if generation is finished.
-    * <model_name>(default: text-davinci-003): The large language model you what to choose.([You can see the available models here](https://platform.openai.com/docs/models/overview))
+    * <model_name>(default: gpt-3.5-turbo-instruct / text-davinci-003(deprecated)): The large language model you what to choose.([You can see the available models here](https://platform.openai.com/docs/models/overview))
 
 * And [behavior_tree/launch/behavior_tree.launch](https://github.com/ARG-NCTU/behavior_tree/blob/master/launch/behavior_tree.launch) also needs the follwing params:
     * <wait_for_generation>(default: false): A special param, define whether behavior need to wait tree config provided by LLM-generation.
@@ -41,7 +45,7 @@ catkin_build -w ${YOUR_WORKSPACE}/catkin_ws
 ## How to run
 * First, start behavior_tree_generation.launch: 
 ```
-roslaunch behavior_tree_generation behavior_tree_generation.launch api_key:=${YOUR_API_KEY} trigger_rosparam:="/LLM_generation_finished" model_name:="text-davinci-003"
+roslaunch behavior_tree_generation behavior_tree_generation.launch trigger_rosparam:="/LLM_generation_finished" model_name:="gpt-3.5-turbo-instruct"
 ```
 * Second, start behavior_tree.launch: 
 ```
