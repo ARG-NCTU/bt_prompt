@@ -172,7 +172,7 @@ class Pipeline:
 
         os.makedirs(self.generate_file, exist_ok=True)
         raw_path = self.generate_file + "raw.txt"
-        full_path = self.generate_file + "test.tree"
+        full_path = self.generate_file + "LLM_generated.tree"
 
         raw_text_file = open(raw_path, "wt+")
         n = raw_text_file.write(raw_string)
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     generate_file = rospack.get_path('behavior_tree') + "/config/drone_latching/"
     prompt_dir = rospack.get_path('behavior_tree_generation') + "/config/prompt/"
     sub_tree_dir = rospack.get_path('behavior_tree_generation') + "/config/subtree/"
-    api_key = rospy.get_param('~api_key', '')
+    api_key = os.getenv("OPENAI_API_KEY")
     trigger_rosparam = rospy.get_param('~trigger_rosparam', '')
     model_name = rospy.get_param('~model_name', '')
 

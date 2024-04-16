@@ -1,3 +1,4 @@
+# This code use python3 in ubuntu 20.04, no ROS needed
 import os
 import argparse
 import openai
@@ -43,7 +44,6 @@ def LLM_generation(args):
     with open(response_path, "w") as file:
         file.write(response_str)
 
-    # raw_string = response["choices"][0]["message"]["content"]
     raw_string = response.choices[0].message.content
     raw_path = os.path.join(args.generate_dir, "raw", f"raw{args.count}.txt")
     print(f"Writing raw.txt: {raw_path}")
