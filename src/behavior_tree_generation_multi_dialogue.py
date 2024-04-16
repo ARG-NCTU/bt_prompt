@@ -33,8 +33,10 @@ class MultiDialogue:
         openai_client = openai.OpenAI()
 
         # check if task_chat_folder exists, if not create it
+        self.args.task_chat_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../chat/{}".format(self.args.task_chat_folder))
         if not os.path.exists(self.args.task_chat_folder):
             os.makedirs(self.args.task_chat_folder)
+            os.chmod(self.args.task_chat_folder, 0o777)
             rospy.logwarn("Created task_chat_folder: {}".format(self.args.task_chat_folder))
         else:
             rospy.loginfo("============task_chat_folder============")
@@ -95,7 +97,8 @@ class MultiDialogue:
 
         if not os.path.exists(file_name):
             open(file_name, "w").close()
-
+            os.chmod(file_name, 0o777)
+            
         with open(file_name, "r") as f:
             for line in f:
                 message["content"] += line
@@ -128,13 +131,14 @@ class MultiDialogue:
 
         with open(file_name, "w") as f:
             f.write(response)
-
+        os.chmod(file_name, 0o777)
     def write_assistant_message(self, text, i):
         file_name = "{}/{}_1_assistant.txt".format(self.args.task_chat_folder, int(i))
 
         with open(file_name, "w") as f:
             f.write(text)
-
+        os.chmod(file_name, 0o777)
+        
     def print_messages(self, messages):
         rospy.logwarn("============Messages============")
         for message in messages:
