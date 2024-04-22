@@ -54,41 +54,40 @@ class OpenAIWrapper:
 
     NEW_OPENAI = parse_version(OPENAI_VERSION) > parse_version("1.0.0")
 
-    class OpenAIWrapper:
-        def __init__(
-            self,
-            model="gpt-3.5-turbo-instruct",
-            temperature=0,
-            max_tokens=500,
-            top_p=1,
-            presence_penalty=0,
-            frequency_penalty=0.2,
-            **kwargs,
-        ):
-            """
-            Initializes an instance of the OpenAIWrapper class.
+    def __init__(
+        self,
+        model="gpt-3.5-turbo-instruct",
+        temperature=0,
+        max_tokens=500,
+        top_p=1,
+        presence_penalty=0,
+        frequency_penalty=0.2,
+        **kwargs,
+    ):
+        """
+        Initializes an instance of the OpenAIWrapper class.
 
-            Args:
-                model (str): The name of the GPT model to use. Defaults to "gpt-3.5-turbo-instruct".
-                temperature (float): Controls the randomness of the generated text. Defaults to 0.
-                max_tokens (int): The maximum number of tokens in the generated text. Defaults to 500.
-                top_p (float): Controls the diversity of the generated text. Defaults to 1.
-                presence_penalty (float): Controls the model's preference for including or avoiding certain phrases. Defaults to 0.
-                frequency_penalty (float): Controls the model's preference for using or avoiding repeated phrases. Defaults to 0.2.
-                **kwargs: Additional keyword arguments to be passed to the OpenAI API.
+        Args:
+            model (str): The name of the GPT model to use. Defaults to "gpt-3.5-turbo-instruct".
+            temperature (float): Controls the randomness of the generated text. Defaults to 0.
+            max_tokens (int): The maximum number of tokens in the generated text. Defaults to 500.
+            top_p (float): Controls the diversity of the generated text. Defaults to 1.
+            presence_penalty (float): Controls the model's preference for including or avoiding certain phrases. Defaults to 0.
+            frequency_penalty (float): Controls the model's preference for using or avoiding repeated phrases. Defaults to 0.2.
+            **kwargs: Additional keyword arguments to be passed to the OpenAI API.
 
-            Returns:
-                None
-            """
-            self.model = model
-            self.temperature = temperature
-            self.max_tokens = max_tokens
-            self.top_p = top_p
-            self.presence_penalty = presence_penalty
-            self.frequency_penalty = frequency_penalty
-            self.kwargs = kwargs
+        Returns:
+            None
+        """
+        self.model = model
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.top_p = top_p
+        self.presence_penalty = presence_penalty
+        self.frequency_penalty = frequency_penalty
+        self.kwargs = kwargs
 
-            self.response = None
+        self.response = None
 
     def __get_text_from_response_old(self, response):
         return response['choices'][0]['text']
