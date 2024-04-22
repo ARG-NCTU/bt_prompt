@@ -94,6 +94,9 @@ class OpenAIWrapper:
 
     def __get_text_from_response_new(self, response):
         return response.choices[0].text
+    
+    def __get_text_from_response_chat(self, response):
+        return response.choices[0].message.content
 
     def get_text_from_response(self, response=None):
         """
@@ -110,6 +113,9 @@ class OpenAIWrapper:
             response = self.response
 
         if self.NEW_OPENAI:
+            if isinstance(response, openai.types.chat.chat_completion.ChatCompletion):
+                return self.__get_text_from_response_chat(response)
+            
             return self.__get_text_from_response_new(response)
         else:
             return self.__get_text_from_response_old(response)
@@ -179,3 +185,25 @@ class OpenAIWrapper:
         else:
             self.response = self.__completion_old(prompt)
         return self.response
+
+    def chat_completion(self, prompt):
+        """
+        Creates a completion using the specified prompt.
+
+        Args:
+            prompt (str): The prompt to generate the completion.
+
+        Returns:
+            object: The response object returned by the OpenAI API.
+
+        """
+        return client.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            top_p=self.top_p,
+            presence_penalty=self.presence_penalty,
+            frequency_penalty=self.frequency_penalty,
+            **self.kwargs,
+        )

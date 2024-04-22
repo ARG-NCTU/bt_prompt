@@ -85,6 +85,16 @@ class BTGenerator:
         """
         self.response = self.wrapper.completion_create(self.prompt)
         return self.response
+    
+    def chat_generate(self):
+        """
+        Generates a response using the wrapper's chat_completion method.
+
+        Returns:
+            str: The generated response.
+        """
+        self.response = self.wrapper.chat_completion(self.prompt)
+        return self.response
 
     def write_response(self, response=None, count=None):
         """
