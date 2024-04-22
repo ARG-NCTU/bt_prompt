@@ -1,5 +1,4 @@
 <launch>
-  <arg name="model_name" default="text-davinci-003"/>
   <arg name="generation_name" default="test"/>
   <arg name="count" default="30"/>
   <arg name="generate_time_interval" default="0"/>

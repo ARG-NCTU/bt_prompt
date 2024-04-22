@@ -8,6 +8,15 @@ from utils import post_processing, subtree_assembly
 
 
 def llm_generate(args):
+    """
+    Generates a response using OpenAI's GPT-4 model based on the provided prompt.
+
+    Args:
+        args (object): An object containing the necessary arguments for generating the response.
+
+    Returns:
+        None
+    """
     openai.api_key = os.getenv("OPENAI_API_KEY")
     if openai.api_key is None:
         print("OPENAI_API_KEY is not set")

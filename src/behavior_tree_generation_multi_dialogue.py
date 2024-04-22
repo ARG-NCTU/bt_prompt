@@ -15,7 +15,26 @@ class Args:
 
 
 class MultiDialogue:
+    """
+    Class representing a multi-dialogue conversation.
+
+    Args:
+        args: The arguments for initializing the MultiDialogue instance.
+
+    Attributes:
+        args: The arguments passed to the MultiDialogue instance.
+    """
+
     def __init__(self, args):
+        """
+        Initializes the BehaviorTreeGenerationMultiDialogue class.
+
+        Args:
+            args: The arguments passed to the class.
+
+        Returns:
+            None
+        """
         # initialize arguments
         self.args = args
         rospy.loginfo("============Args============")
@@ -113,6 +132,16 @@ class MultiDialogue:
                     continue
 
     def read_mesaage(self, role, file_name):
+        """
+        Read the contents of a file and return a message dictionary.
+
+        Args:
+            role (str): The role of the message.
+            file_name (str): The path to the file.
+
+        Returns:
+            dict: A dictionary containing the role and content of the message.
+        """
         message = {}
         message["role"] = role
         message["content"] = ""
@@ -128,6 +157,12 @@ class MultiDialogue:
         return message
 
     def read_messages(self):
+        """
+        Reads messages from text files and returns a list of messages.
+
+        Returns:
+            messages (list): A list of messages read from text files.
+        """
         messages = []
 
         for i in range(self.args.max_dialogue):
@@ -153,6 +188,16 @@ class MultiDialogue:
         return messages
 
     def write_response(self, response, i):
+        """
+        Writes the given response to a file.
+
+        Args:
+            response (str): The response to write to the file.
+            i (int): The index used to generate the file name.
+
+        Returns:
+            None
+        """
         file_name = "{}/{}_2_response.txt".format(
             self.args.task_chat_folder, int(i))
 
@@ -161,6 +206,16 @@ class MultiDialogue:
         os.chmod(file_name, 0o666)
 
     def write_assistant_message(self, text, i):
+        """
+        Writes the given text as an assistant message to a file.
+
+        Args:
+            text (str): The text to be written as the assistant message.
+            i (int): The index used to generate the file name.
+
+        Returns:
+            None
+        """
         file_name = "{}/{}_1_assistant.txt".format(
             self.args.task_chat_folder, int(i))
 
@@ -169,6 +224,15 @@ class MultiDialogue:
         os.chmod(file_name, 0o666)
 
     def print_messages(self, messages):
+        """
+        Prints the messages with their roles and content.
+
+        Args:
+            messages (list): A list of dictionaries representing the messages.
+
+        Returns:
+            None
+        """
         rospy.logwarn("============Messages============")
         for message in messages:
             rospy.loginfo(f"{message['role']}: {message['content'][:500]}")

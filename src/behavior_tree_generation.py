@@ -9,6 +9,20 @@ from bt_generator import BTGenerator
 
 def main(path, sub_tree_dir_path, count,
          model="gpt-3.5-turbo-instruct", temperature=0, **kwargs):
+    """
+    Generate behavior trees using the specified model and parameters.
+
+    Args:
+        path (str): The path to the behavior tree file.
+        sub_tree_dir_path (str): The path to the directory where sub-trees are stored.
+        count (int): The number of behavior trees to generate.
+        model (str, optional): The model to use for generation. Defaults to "gpt-3.5-turbo-instruct".
+        temperature (int, optional): The temperature parameter for generation. Defaults to 0.
+        **kwargs: Additional keyword arguments for the BTGenerator.
+
+    Returns:
+        None
+    """
     bt_gen = BTGenerator(
         path=path,
         sub_tree_dir_path=sub_tree_dir_path,
