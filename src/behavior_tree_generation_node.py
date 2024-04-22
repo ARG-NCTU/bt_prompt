@@ -207,7 +207,7 @@ class Pipeline:
         else:
             raise NotImplementedError
 
-    def LLM_generation(self):
+    def llm_generate(self):
         openai.api_key = self.api_key
         with open(self.generate_file + "prompt.txt", "wt+") as file:
             file.write(self.final_prompt)
@@ -390,7 +390,7 @@ class Pipeline:
 
         print(self.final_prompt)
         # call api
-        self.LLM_generation()
+        self.llm_generate()
 
         self.task_button.config(text="Finished")
 

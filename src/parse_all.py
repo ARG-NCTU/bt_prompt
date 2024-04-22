@@ -4,14 +4,19 @@ import traceback
 
 import rospkg
 import rospy
+
 from utils import post_processing, subtree_assembly
 
 
-def LLM_generation(args, count=None):
+def llm_generate(args, count=None):
     os.makedirs(os.path.join(args.generate_dir, "raw"), exist_ok=True)
 
     rospy.loginfo(f"Reading raw.txt: {count}")
-    raw_txt = open(os.path.join(args.generate_dir, "raw", f"raw{count}.txt")).read()
+    raw_txt = open(
+        os.path.join(
+            args.generate_dir,
+            "raw",
+            f"raw{count}.txt")).read()
 
     tree_path = os.path.join(args.generate_dir, "tree", f"test{count}.tree")
     try:
@@ -24,16 +29,6 @@ def LLM_generation(args, count=None):
         rospy.logerr(f"Error[{count}]: {e}")
         traceback.print_exc()
         return
-
-    rospy.loginfo("Start sleeping")
-    for i in range(args.generate_time_interval * args.sleep_seperate):
-        rospy.sleep(1.0 / args.sleep_seperate)
-        print(
-            f"[INFO] [{rospy.get_time():.6f}]: Sleeping progress: {i / args.generate_time_interval / args.sleep_seperate * 100.0: .2f}%",
-            end="\r",
-        )
-        if rospy.is_shutdown():
-            return
 
 
 class Args:
@@ -50,10 +45,16 @@ if __name__ == "__main__":
     model_name = rospy.get_param("~model_name", "")
     count = rospy.get_param("~count", 30)
     generate_time_interval = rospy.get_param("~generate_time_interval", 20)
-    generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "exp", "L", generation_name)
+    generate_dir = os.path.join(
+        rospack.get_path("behavior_tree_generation"),
+        "config",
+        "exp",
+        "L",
+        generation_name)
     sleep_seperate = rospy.get_param("~sleep_seperate", 100)
 
-    sub_tree_dir = rospack.get_path("behavior_tree_generation") + "/config/subtree/"
+    sub_tree_dir = rospack.get_path(
+        "behavior_tree_generation") + "/config/subtree/"
 
     args = {
         "generate_dir": generate_dir,
@@ -63,10 +64,10 @@ if __name__ == "__main__":
         "sub_tree_dir": sub_tree_dir,
     }
     args = Args(args)
-    # LLM_generation(args, count)
+    # llm_generate(args, count)
     # exit()
 
     for i in range(count):
-        LLM_generation(args, count=i)
+        llm_generate(args, count=i)
         if rospy.is_shutdown():
             break
