@@ -33,7 +33,7 @@ catkin_build -w ${YOUR_WORKSPACE}/catkin_ws
 export OPENAI_API_KEY=${your_key_here}
 ```
 ## Params
-* There are several params in [behavior_tree_generation/launch/behavior_tree_generation.launch](https://github.com/ARG-NCTU/behavior_tree_generation/blob/master/launch/behavior_tree_generation.launch):
+* There are several params in [behavior_tree_generation/launch/behavior_tree_generation_gui.launch](https://github.com/ARG-NCTU/behavior_tree_generation/blob/master/launch/behavior_tree_generation_gui.launch):
      
     * <trigger_rosparam>(default: /LLM_generation_finished): This param define the name of a specified rosparam to trigger behavior tree node if generation is finished.
     * <model_name>(default: gpt-3.5-turbo-instruct / text-davinci-003(deprecated)): The large language model you what to choose.([You can see the available models here](https://platform.openai.com/docs/models/overview))
@@ -43,9 +43,9 @@ export OPENAI_API_KEY=${your_key_here}
     * <trigger_rosparam>(default: /LLM_generation_finished): This param define the name of a specified rosparam to trigger behavior tree node if param <wait_for_generation> is True.
     * <tree>:The config file for behavior tree node to read.
 ## How to run
-* First, start behavior_tree_generation.launch: 
+* First, start behavior_tree_generation_gui.launch: 
 ```
-roslaunch behavior_tree_generation behavior_tree_generation.launch trigger_rosparam:="/LLM_generation_finished" model_name:="gpt-3.5-turbo-instruct"
+roslaunch behavior_tree_generation behavior_tree_generation_gui.launch trigger_rosparam:="/LLM_generation_finished" model_name:="gpt-3.5-turbo-instruct"
 ```
 * Second, start behavior_tree.launch: 
 ```
