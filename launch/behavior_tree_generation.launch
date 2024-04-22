@@ -7,10 +7,10 @@
   <arg name="count" default="10" />
   <arg name="temperature" default="1" />
 
-  <node name="behavior_tree_generation" pkg="behavior_tree_generation"
+  <node name="behavior_tree_generation" pkg="bt_prompt"
     type="behavior_tree_generation.py" output="screen">
     <param name="generation_name"
-      value="$(find behavior_tree_generation)/config/exp/L/$(arg generation_name)" />
+      value="$(find bt_prompt)/config/exp/L/$(arg generation_name)" />
     <param name="model_name" value="$(arg model_name)" />
     <param name="temperature" value="$(arg temperature)" />
     <param name="count" value="$(arg count)" />

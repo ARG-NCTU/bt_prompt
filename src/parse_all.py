@@ -38,7 +38,7 @@ class Args:
 
 
 if __name__ == "__main__":
-    rospy.init_node("behavior_tree_generation_node")
+    rospy.init_node("bt_prompt_node")
     rospack = rospkg.RosPack()
 
     generation_name = rospy.get_param("~generation_name", "test")
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     count = rospy.get_param("~count", 30)
     generate_time_interval = rospy.get_param("~generate_time_interval", 20)
     generate_dir = os.path.join(
-        rospack.get_path("behavior_tree_generation"),
+        rospack.get_path("bt_prompt"),
         "config",
         "exp",
         "L",
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     sleep_seperate = rospy.get_param("~sleep_seperate", 100)
 
     sub_tree_dir = rospack.get_path(
-        "behavior_tree_generation") + "/config/subtree/"
+        "bt_prompt") + "/config/subtree/"
 
     args = {
         "generate_dir": generate_dir,

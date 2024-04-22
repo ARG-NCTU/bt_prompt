@@ -4,7 +4,7 @@
   <arg name="count" default="30"/>
   <arg name="generate_time_interval" default="0"/>
 
-  <node name="behavior_tree_generation" pkg="behavior_tree_generation" type="parse_all.py" output="screen">
+  <node name="bt_prompt" pkg="bt_prompt" type="parse_all.py" output="screen">
     <param name="generation_name" value="$(arg generation_name)" />
     <param name="model_name" value="text-davinci-003" />
     <param name="count" value="$(arg count)"/>

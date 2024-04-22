@@ -1,0 +1,19 @@
+<launch>
+  <!-- text-davinci-003 was deprecated on January 4, 2024,
+    so now use GPT-3.5-turbo-instruct. -->
+  <!-- <arg name="model_name" default="text-davinci-003"/> -->
+  <arg name="model_name" default="gpt-3.5-turbo" />
+  <arg name="task_chat_folder" default="" />
+  <arg name="max_dialogue" default="20" />
+  <arg name="temperature" default="0" />
+
+  <node name="behavior_tree_generation_multi_dialogue" pkg="bt_prompt"
+    type="behavior_tree_generation_multi_dialogue.py" output="screen" required="true">
+    <param name="model_name" value="$(arg model_name)" />
+    <param name="task_chat_folder"
+      value="$(arg task_chat_folder)" />
+    <param name="max_dialogue" value="$(arg max_dialogue)" />
+    <param name="temperature" value="$(arg temperature)" />
+  </node>
+
+</launch>

@@ -6,6 +6,7 @@ import tkinter as tk
 import openai
 import rospkg
 import rospy
+
 from utils import post_processing, subtree_assembly
 
 
@@ -403,16 +404,16 @@ class Pipeline:
 
 
 if __name__ == '__main__':
-    rospy.init_node('behavior_tree_generation_node')
+    rospy.init_node('bt_prompt_node')
     rospack = rospkg.RosPack()
 
     generate_file = rospack.get_path(
         'behavior_tree') + "/config/drone_latching/"
     os.makedirs(generate_file, exist_ok=True)
     prompt_dir = rospack.get_path(
-        'behavior_tree_generation') + "/config/prompt/"
+        'bt_prompt') + "/config/prompt/"
     sub_tree_dir = rospack.get_path(
-        'behavior_tree_generation') + "/config/subtree/"
+        'bt_prompt') + "/config/subtree/"
     api_key = os.getenv("OPENAI_API_KEY")
     trigger_rosparam = rospy.get_param('~trigger_rosparam', '')
     model_name = rospy.get_param('~model_name', '')

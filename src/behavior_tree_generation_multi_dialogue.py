@@ -29,7 +29,7 @@ class MultiDialogue:
         rospy.loginfo("============OpenAI API Key============")
         rospy.loginfo(openai.api_key)
 
-        openai_client = openai.OpenAI()
+        # openai_client = openai.OpenAI()
 
         # check if task_chat_folder exists, if not create it
         self.args.task_chat_folder = os.path.join(os.path.dirname(
@@ -37,7 +37,7 @@ class MultiDialogue:
             "../chat/{}".format(self.args.task_chat_folder))
         if not os.path.exists(self.args.task_chat_folder):
             os.makedirs(self.args.task_chat_folder)
-            os.chmod(self.args.task_chat_folder, 0o777)
+            os.chmod(self.args.task_chat_folder, 0o666)
             rospy.logwarn(
                 "Created task_chat_folder: {}".format(
                     self.args.task_chat_folder))
@@ -58,6 +58,7 @@ class MultiDialogue:
             func = input("Enter function: ")
             if func == "q":
                 rospy.logwarn("============Quit============")
+                rospy.signal_shutdown("Quit")
                 break
             elif func == "c":
                 new_full_messages = self.read_messages()
@@ -98,7 +99,7 @@ class MultiDialogue:
                     continue
                 rospy.logwarn("============Send============")
                 try:
-                    response = openai_client.chat.completions.create(
+                    response = openai.ChatCompletion.create(
                         model=self.args.model_name,
                         messages=messages,
                         temperature=self.args.temperature
@@ -118,7 +119,7 @@ class MultiDialogue:
 
         if not os.path.exists(file_name):
             open(file_name, "w").close()
-            os.chmod(file_name, 0o777)
+            os.chmod(file_name, 0o666)
 
         with open(file_name, "r") as f:
             for line in f:
@@ -129,7 +130,7 @@ class MultiDialogue:
     def read_messages(self):
         messages = []
 
-        for i in range(self.args.dialogue_num):
+        for i in range(self.args.max_dialogue):
             role = "user"
             file_name = "{}/{}_0_{}.txt".format(
                 self.args.task_chat_folder, i, role)
@@ -157,7 +158,7 @@ class MultiDialogue:
 
         with open(file_name, "w") as f:
             f.write(response)
-        os.chmod(file_name, 0o777)
+        os.chmod(file_name, 0o666)
 
     def write_assistant_message(self, text, i):
         file_name = "{}/{}_1_assistant.txt".format(
@@ -165,7 +166,7 @@ class MultiDialogue:
 
         with open(file_name, "w") as f:
             f.write(text)
-        os.chmod(file_name, 0o777)
+        os.chmod(file_name, 0o666)
 
     def print_messages(self, messages):
         rospy.logwarn("============Messages============")
@@ -174,11 +175,11 @@ class MultiDialogue:
 
 
 if __name__ == "__main__":
-    rospy.init_node("behavior_tree_generation_multi_dialogue")
+    rospy.init_node("bt_prompt_multi_dialogue")
     args = Args(
         {
             "task_chat_folder": rospy.get_param("~task_chat_folder", ""),
-            "dialogue_num": rospy.get_param("~dialogue_num", 20),
+            "max_dialogue": rospy.get_param("~max_dialogue", 20),
             "model_name": rospy.get_param("~model_name", "gpt-3.5-turbo"),
             "temperature": rospy.get_param("~temperature", 0.0),
         }

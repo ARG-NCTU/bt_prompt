@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 import os
 
-import openai
 import rospkg
 import rospy
 
 from bt_generator import BTGenerator
-from utils import post_processing, subtree_assembly
 
 
 def main(path, sub_tree_dir_path, count,
@@ -20,18 +18,21 @@ def main(path, sub_tree_dir_path, count,
     bt_gen.read_prompt()
 
     for i in range(count):
+        rospy.loginfo(f"Generating BT {i}")
         response = bt_gen.generate()
         bt_gen.write_response(response, count=i)
         bt_gen.write_raw(response, count=i)
         bt_gen.write_tree(bt_gen.generate_tree(response), count=i)
+        if rospy.is_shutdown():
+            break
 
 
 if __name__ == "__main__":
-    rospy.init_node("behavior_tree_generation_node")
+    rospy.init_node("bt_prompt_node")
     rospack = rospkg.RosPack()
 
     generate_dir = rospy.get_param("~generate_dir",
-                                   os.path.join(rospack.get_path("behavior_tree_generation"),
+                                   os.path.join(rospack.get_path("bt_prompt"),
                                                 "config",
                                                 "exp",
                                                 "L",
@@ -40,7 +41,7 @@ if __name__ == "__main__":
     temperature = rospy.get_param("~temperature", 0)
     count = rospy.get_param("~count", 30)
     sub_tree_dir = rospack.get_path(
-        "behavior_tree_generation") + "/config/subtree/"
+        "bt_prompt") + "/config/subtree/"
 
     main(
         generate_dir,
