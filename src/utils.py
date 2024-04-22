@@ -490,7 +490,8 @@ def subtree_assembly(raw, path):
     for string, num_tabs in result:
         final = final + "\n"
         if string != "->" and string != "||" and string != "?":
-            directory_path = path + string + ".tree"
+            # directory_path = path + string + ".tree"
+            directory_path = os.path.join(path, string + ".tree")
 
             with open(directory_path, 'r') as file:
                 subtree = file.read().rstrip()

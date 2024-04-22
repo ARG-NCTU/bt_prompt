@@ -33,6 +33,7 @@ class OpenAIWrapper:
         top_p=1,
         presence_penalty=0,
         frequency_penalty=0.2,
+        **kwargs,
     ):
         self.model = model
         self.temperature = temperature
@@ -40,6 +41,7 @@ class OpenAIWrapper:
         self.top_p = top_p
         self.presence_penalty = presence_penalty
         self.frequency_penalty = frequency_penalty
+        self.kwargs = kwargs
 
         self.response = None
 
@@ -82,6 +84,7 @@ class OpenAIWrapper:
             top_p=self.top_p,
             presence_penalty=self.presence_penalty,
             frequency_penalty=self.frequency_penalty,
+            **self.kwargs,
         )
 
     def __completion_new(self, prompt):
@@ -93,6 +96,7 @@ class OpenAIWrapper:
             top_p=self.top_p,
             presence_penalty=self.presence_penalty,
             frequency_penalty=self.frequency_penalty,
+            **self.kwargs,
         )
 
     def completion_create(self, prompt):

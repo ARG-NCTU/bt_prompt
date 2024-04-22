@@ -1,11 +1,19 @@
 <launch>
+  <!-- text-davinci-003 was deprecated on January 4, 2024,
+    so now use GPT-3.5-turbo-instruct. -->
   <!-- <arg name="model_name" default="text-davinci-003"/> -->
-  <arg name="model_name" default="gpt-3.5-turbo-instruct"/>
-  
-  <node name="behavior_tree_generation" pkg="behavior_tree_generation" type="behavior_tree_generation_node.py" output="screen">
-    <!-- This param define the name of a specified rosparam to trigger behavior tree node  -->
-    <param name="trigger_rosparam" type="string" value='/LLM_generation_finished' />
-    <param name="model_name" type="string" value='$(arg model_name)' />
+  <arg name="model_name" default="gpt-3.5-turbo-instruct" />
+  <arg name="generation_name" default="test" />
+  <arg name="count" default="10" />
+  <arg name="temperature" default="1" />
+
+  <node name="behavior_tree_generation" pkg="behavior_tree_generation"
+    type="behavior_tree_generation.py" output="screen">
+    <param name="generation_name"
+      value="$(find behavior_tree_generation)/config/exp/L/$(arg generation_name)" />
+    <param name="model_name" value="$(arg model_name)" />
+    <param name="temperature" value="$(arg temperature)" />
+    <param name="count" value="$(arg count)" />
   </node>
-  
+
 </launch>
