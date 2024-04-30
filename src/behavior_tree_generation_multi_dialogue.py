@@ -56,7 +56,7 @@ class MultiDialogue:
             "../chat/{}".format(self.args.task_chat_folder))
         if not os.path.exists(self.args.task_chat_folder):
             os.makedirs(self.args.task_chat_folder)
-            os.chmod(self.args.task_chat_folder, 0o666)
+            os.chmod(self.args.task_chat_folder, 0o777)
             rospy.logwarn(
                 "Created task_chat_folder: {}".format(
                     self.args.task_chat_folder))
