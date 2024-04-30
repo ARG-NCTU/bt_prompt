@@ -19,13 +19,13 @@ def LLM_generation(args, count=None):
     os.makedirs(os.path.join(args.generate_dir, "raw"), exist_ok=True)
     os.makedirs(os.path.join(args.generate_dir, "tree"), exist_ok=True)
 
-    rospy.loginfo("Reading prompt.txt")
+    rospy.loginfo(f"Reading {args.prompt_file_name}")
     try:
-        prompt = open(os.path.join(args.generate_dir, "prompt.txt"), "rt").read()
+        prompt = open(os.path.join(args.generate_dir, args.prompt_file_name), "rt").read()
     except FileNotFoundError:
         # Write a default prompt into the file
         prompt = "Hi, GPT!"
-        with open(os.path.join(args.generate_dir, "prompt.txt"), "wt") as file:
+        with open(os.path.join(args.generate_dir, args.prompt_file_name), "wt") as file:
             file.write(prompt)
 
     rospy.loginfo("Generating response")
@@ -34,7 +34,7 @@ def LLM_generation(args, count=None):
         model=args.model_name,
         prompt=prompt,
         temperature=0,
-        max_tokens=500,
+        max_tokens=2000,
         top_p=1,
         presence_penalty=0,
         frequency_penalty=0.2,
@@ -90,6 +90,7 @@ if __name__ == "__main__":
     count = rospy.get_param("~count", 30)
     generate_time_interval = rospy.get_param("~generate_time_interval", 20)
     generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "exp", "L", generation_name)
+    prompt_file_name = rospy.get_param("~prompt_file_name", "prompt_moos.txt")
     sleep_seperate = rospy.get_param("~sleep_seperate", 100)
 
     sub_tree_dir = rospack.get_path("behavior_tree_generation") + "/config/subtree/"
@@ -100,6 +101,7 @@ if __name__ == "__main__":
         "generate_time_interval": generate_time_interval,
         "sleep_seperate": sleep_seperate,
         "sub_tree_dir": sub_tree_dir,
+        "prompt_file_name": prompt_file_name,
     }
     args = Args(args)
 
