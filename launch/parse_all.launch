@@ -5,7 +5,6 @@
   <node name="bt_prompt" pkg="bt_prompt" type="parse_all.py" output="screen">
     <param name="generation_name" value="$(arg generation_name)" />
     <param name="count" value="$(arg count)"/>
-    <param name="generate_time_interval" value="$(arg generate_time_interval)"/>
   </node>
 
 </launch>
