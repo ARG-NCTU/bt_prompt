@@ -45,7 +45,7 @@ export OPENAI_API_KEY=${your_key_here}
 ## How to run
 * First, start bt_prompt_gui.launch: 
 ```
-roslaunch bt_prompt bt_prompt_gui.launch trigger_rosparam:="/LLM_generation_finished" model_name:="gpt-3.5-turbo-instruct"
+roslaunch bt_prompt behavior_tree_generation_gui.launch trigger_rosparam:="/LLM_generation_finished" model_name:="gpt-3.5-turbo-instruct"
 ```
 * Second, start behavior_tree.launch: 
 ```
