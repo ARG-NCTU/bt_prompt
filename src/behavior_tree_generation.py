@@ -4,7 +4,7 @@ import os
 import rospkg
 import rospy
 
-from bt_generator import BTGenerator
+from bt_prompt.bt_generator import BTGenerator
 
 
 def main(path, sub_tree_dir_path, count,

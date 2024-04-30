@@ -1,7 +1,7 @@
 # This code use python3 in ubuntu 20.04, no ROS needed
 import argparse
 import os
-from bt_generator import BTGenerator
+from bt_prompt.bt_generator import BTGenerator
 
 
 def main(args):

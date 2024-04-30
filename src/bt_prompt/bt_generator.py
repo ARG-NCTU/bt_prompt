@@ -1,7 +1,7 @@
 import os
 
-from openai_wrapper import OpenAIWrapper
-from utils import post_processing, subtree_assembly
+from bt_prompt.openai_wrapper import OpenAIWrapper
+from bt_prompt.utils import post_processing, subtree_assembly
 
 
 class BTGenerator:

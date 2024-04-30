@@ -5,7 +5,7 @@ import traceback
 import rospkg
 import rospy
 
-from utils import post_processing, subtree_assembly
+from bt_prompt.utils import post_processing, subtree_assembly
 
 
 def llm_generate(args, count=None):
