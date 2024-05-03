@@ -2,3 +2,5 @@
 exp_*
 chat/*/*.txt
 chat/*.txt
+config/**/*.txt
+config/**/*.tree
