@@ -1,0 +1,18 @@
+<launch>
+  <!-- text-davinci-003 was deprecated on January 4, 2024,
+    so now use GPT-3.5-turbo-instruct. -->
+  <!-- <arg name="model_name" default="text-davinci-003"/> -->
+  <arg name="model_name" default="gpt-3.5-turbo-instruct" />
+  <arg name="generation_name" default="test" />
+  <arg name="count" default="1" />
+  <arg name="generate_time_interval" default="5" />
+
+  <node name="behavior_tree_generation" pkg="behavior_tree_generation"
+    type="bhv_generation_moos.py" output="screen">
+    <param name="generation_name" value="$(arg generation_name)" />
+    <param name="model_name" value="$(arg model_name)" />
+    <param name="count" value="$(arg count)" />
+    <param name="generate_time_interval" value="$(arg generate_time_interval)" />
+  </node>
+
+</launch>
