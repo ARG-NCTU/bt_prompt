@@ -3,7 +3,7 @@
     so now use GPT-3.5-turbo-instruct. -->
   <!-- <arg name="model_name" default="text-davinci-003"/> -->
   <arg name="model_name" default="gpt-3.5-turbo-1106" />
-  <arg name="gen_file" default="bhv" />
+  <arg name="gen_file" default="json" />
   <arg name="mission_name" default="test" />
   <arg name="count" default="1" />
 

@@ -17,7 +17,7 @@ def LLM_generation(args, count=None):
     prompt_file_name = "prompt.txt"
     rospy.loginfo(prompt_file_name)
     try:
-        prompt = open(os.path.join(args.generate_dir, prompt_file_name), "rt").read()
+        prompt = open(os.path.join(args.prompt_dir, prompt_file_name), "rt").read()
     except FileNotFoundError:
         # Write a default prompt into the file
         prompt = "Hi, GPT!"
@@ -95,9 +95,11 @@ if __name__ == "__main__":
     model_name = rospy.get_param("~model_name", "")
     count = rospy.get_param("~count", 30)
     generate_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "moos", mission_name)
+    prompt_dir = os.path.join(rospack.get_path("behavior_tree_generation"), "config", "moos")
 
     args = {
         "generate_dir": generate_dir,
+        "prompt_dir": prompt_dir,
         "gen_file": gen_file,
         "model_name": model_name,
     }
