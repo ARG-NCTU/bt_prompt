@@ -1,0 +1,103 @@
+[Environment Description]
+Now imagine you are a fully autonomous boat in Moos simulator. The simulator contains a boat.
+
+[Existing parameters for robot behavior]
+1 "initialize" : [{"variable_name", "variable_value"}] -- Define all the parameters that will be used in the function.
+2 "behavior_waypts" : [{"name", "condition", "endflag", "speed", "repeat", "points"}] -- Defile all the behaviors that is expected to execute.
+    2-1 "name" -- (string) behavior name.
+    2-2 "condition" -- (string) One condition define one starting behavior condition that if the variable is equal to the setting value, then the behavior will start.
+    2-3 "endflag" -- (string) One endflag define one variable that changes to the setting value after the behavior ends.
+    2-4 "speed" -- (float) Define the boat speed.
+    2-5 "repeat" -- (int) Define the number of times the behavior is repeated.
+    2-6 "points" -- (string) Define the waypoints that the boat will follow. The string should follow one of the below methods.
+        2-6-1 There are two methods to define "points":
+            a. define a series of waypoints, following the mentioned regulation. The x and y of a waypoint pair should be separated by ",". And the waypoint should be separated with the next waypoint using ":".
+            b. using the predefined format(mentioned in the point 3) of complex trajectory.
+3. predefined format of points:
+    3-1 "lawnmower" : if the path is set to lawnmower, you could fill the below description changing the specified condition into the option points, others keeping the same content as the description.
+    "format=lawnmower, label=foxtrot, x = "x of certer point",y = "y of certer point", height= "total height of lawnmower shape", width="total width of lawnmower shape", lane_width="lane width", rows="east-west or north-south", degs="Rotation angle""
+    3-2 "polygon" : if the path is set to any one of polygons, you could fill the below description changing the specified condition into the option points, others keeping the same content as the description.
+    "format=radial, label=foxtrot, x = "x of certer point",y = "y of certer point", radius="distance from center point to one of the vertices", pts="number of vertices""
+    3-3 "ellipse" : if the path is set to circle or ellipse, you could fill the below description changing the specified condition into the option points, others keeping the same content as the description.
+    "format=ellipse, label=golf, x = "x of certer point",y = "y of certer point", degs="Rotation angle", pts="number of points on the specified trajectory, minimum is 4", major="length of semi-major axis", minor="length of semi-minor axis", snap=1"
+
+[Generated text format in json]
+{
+    "initialize" : 
+    [
+        {
+            "variable_name" : "A variable name that will be used in the below conditions or endflags. The letters should all be in capital letters.",
+            "variable_value" : "The value of the variable when the entire mission beginning. The value only could be true or false."
+        }
+
+    ],
+    "behavior_waypts" :
+    [
+        {
+            "name" : "behavior name",
+            "condition" : ["variable1 = value1", "variable2 = value2", "..."], 
+            // Hint: The value of condition in the string only could be "true" or "false".
+            "endflag" : ["variable1 = value1", "variable2 = value2", "..."], 
+            // Hint: The value of endflag in the string only could be "true" or "false".
+            "speed" : "(float, default=5.0)",
+            "repeat" : "(int,default=0)",
+            "points" : "wpt1_x, wpt1_y : wpt2_x, wpt2_y : ..." or "description of predefined format of points."
+        }
+    ]
+}
+
+[Example]
+
+Mission: First, the boat will do the waypoints navigation one times follow the waypoint series, 60,-40 : 60,-160 : 150,-160 : 180,-100 : 150,-40.
+After the first step, the boat will drive a square track with a width of 100, a starting point at 60, -40, and the task ends after driving twice.
+The mission will start when the variable "DEPLOY" is equal to true.
+The mission will end when the variable "RETURN" is equal to true.
+
+{
+    "initialize" : 
+    [
+        {
+            "variable_name" : "DEPLOY",
+            "variable_value" : "false"
+        },
+        {
+            "variable_name" : "RETURN",
+            "variable_value" : "false"
+        },
+        {
+            "variable_name" : "TASK1",
+            "variable_value" : "true"
+        },
+        {
+            "variable_name" : "TASK2",
+            "variable_value" : "false"
+        }
+
+    ],
+    "behavior_waypts" :
+    [
+        {
+            "name" : "waypt_survey_task1",
+            "condition" : ["DEPLOY = true", "RETURN = false", "TASK1 = true", "TASK2 = false"],
+            "endflag" : ["TASK1 = false", "TASK2 = true"],
+            "speed" : 5.0,
+            "repeat" : 0,
+            "points" : "60,-40 : 60,-160 : 150,-160 : 180,-100 : 150,-40"
+        },
+        {
+            "name" : "waypt_survey_task2",
+            "condition" : ["DEPLOY = true", "RETURN = false", "TASK1 = false", "TASK2 = true"],
+            "endflag" : ["TASK1 = false", "TASK2 = false"],
+            "speed" : 5.0,
+            "repeat" : 1,
+            "points" : "format=radial, label=foxtrot, x = 110,y = -90, radius=71, pts=4"
+        }
+    ]
+} 
+
+[Task Description]
+
+Mission:Now, you need to drive the boat following below goal point pairs: (130,-170), (160, -110), (130, -60), and drive twice.
+The mission will start when the variable "DEPLOY" is equal to true.
+The mission will end when the variable "RETURN" is equal to true. 
+Please design this mission as behavior file. You can follow the above generated text format and the example.
