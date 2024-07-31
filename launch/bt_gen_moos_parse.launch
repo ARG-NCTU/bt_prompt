@@ -6,11 +6,13 @@
   <arg name="gen_file" default="json" />
   <arg name="mission_name" default="test" />
   <arg name="count" default="1" />
+  <arg name="virtual" default="True" />
 
   <node name="behavior_tree_generation" pkg="behavior_tree_generation" type="moos_parse2bhv.py" output="screen">
     <param name="mission_name" value="$(arg mission_name)" />
     <param name="gen_file" value="$(arg gen_file)" />
     <param name="model_name" value="$(arg model_name)" />
+    <param name="virtual" value="$(arg virtual)" />
     <param name="count" value="$(arg count)" />
   </node>
 
