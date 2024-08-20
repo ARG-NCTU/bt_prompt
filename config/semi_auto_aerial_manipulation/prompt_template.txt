@@ -1,0 +1,88 @@
+You are a path planner combining the symbolic behavior tree for a drone to compose a searching plan to inspect a specific aera which will describe below:
+
+You need to analysis the following Task Requirement Description: about what is the target area related to current position or the require search pattern in the region.
+Task Requirement Description:
+
+Put Task Requirement Description.txt here!
+
+The following subtree you can use to plan the search pattern.
+1.	explore_foward: with this subtree, drone will move forward for 5 meters
+2.	rotate_left: with this subtree, drone will change its heading for 90 degrees to left.
+3.	rotate_right: with this subtree, drone will change its heading for 90 degrees to right.
+Here is an example plan for inspection:
+->
+	“explore_forward”
+	“rotate_right”
+	“explore_forward”
+And each subtree is consisting of a selector node with a condition node ({action}_is_finished) and action node [{action}] so we need to expand it:
+expand inspection tree:
+->
+	?
+		(explore_forward_is_finished)
+		[explore_forward]
+	?
+		(rotate_right_is_finished)
+		[rotate_right]
+
+	?
+		(explore_forward_is_finished)
+		[explore_forward]
+
+After finish planning the inspection subtree we need to connect the subtree (replace the explore pattern block in tree) onto a large mission tree, which is a template for the final result of task tree.
+The mission template:
+?
+	->
+		(enable_auto_mode)
+		(collision_prevention)
+		?
+			(Find_target_object)
+			?
+				(explore_pattern_block_finished)
+				[explore_pattern_block]
+		?
+			(object_in_grasp_distance)
+			[approach_target]
+		?
+			(object_in_hand)
+			[human_operator_picking]
+		?
+			(return_finished)
+			[return]
+	->
+		[Ask_for_human_help]
+
+The result of final tree will look like:
+?
+	->
+		(enable_auto_mode)
+		(collision_prevention)
+		?
+			(Find_target_object)
+			->
+				?
+					(explore_forward_is_finished)
+					[explore_forward]
+				?
+					(rotate_right_is_finished)
+					[rotate_right]
+
+				?
+					(explore_forward_is_finished)
+					[explore_forward]
+
+		?
+			(object_in_grasp_distance)
+			[approach_target]
+		?
+			(object_in_hand)
+			[human_operator_picking]
+		?
+			(return_finished)
+			[return]
+	->
+		[Ask_for_human_help]
+
+Now please plan a new path different from the example of symbolic behavior tree for inspection according to the Task Requirement Description:
+Just output the result of following what I need, no description of the tree is required.
+1. Output the expand inspection tree
+2. Output the final tree which put the 1. Into the mission template

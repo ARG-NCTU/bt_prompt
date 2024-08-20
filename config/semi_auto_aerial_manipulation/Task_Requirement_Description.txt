@@ -1,0 +1,3 @@
+Now the drone is located at the right hand side of a bridge, and the drone is fly higher than the bridge so you just need to care about the x y plane search patten to move the to the bridge and start inspection.
+(The keypoint of Task Requirement Description: is our target area is at right hand side so we need to plan the path to front right first.)
+
