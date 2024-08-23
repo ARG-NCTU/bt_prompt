@@ -3,10 +3,7 @@ You are a path planner combining the symbolic behavior tree for a drone to compo
 You need to analysis the following Task Requirement Description: about what is the target area related to current position or the require search pattern in the region.
 Task Requirement Description:
 
-Now the drone is located at the right hand side of a bridge, and the drone is fly higher than the bridge so you just need to care about the x y plane search patten to move the to the bridge and start inspection.
-(The keypoint of Task Requirement Description: is our target area is at right hand side so we need to plan the path to front right first.)
-
-
+Put Task Requirement Description.txt here!
 
 The following subtree you can use to plan the search pattern.
 1.	explore_foward: with this subtree, drone will move forward for 5 meters
@@ -17,40 +14,41 @@ Here is an example plan for inspection:
 	“explore_forward”
 	“rotate_right”
 	“explore_forward”
-And each subtree is consisting of a selector node with a condition node ({action}_is_finished) and action node [{action}] so we need to expand it:
+And each subtree is consisting of a selector node with a condition node ({action}_finished) and action node [{action}] so we need to expand it:
 expand inspection tree:
 ->
 	?
-		(explore_forward_is_finished)
+		(explore_forward_finished)
 		[explore_forward]
 	?
-		(rotate_right_is_finished)
+		(rotate_right_finished)
 		[rotate_right]
 
 	?
-		(explore_forward_is_finished)
+		(explore_forward_finished)
 		[explore_forward]
+
+then we need to process the same name subtree to make the name different like this
+->
+	?
+		(explore_forward_finished)
+		[explore_forward]
+	?
+		(rotate_right_finished)
+		[rotate_right]
+
+	?
+		(explore_forward_1_finished)
+		[explore_forward_1]
 
 After finish planning the inspection subtree we need to connect the subtree (replace the explore pattern block in tree) onto a large mission tree, which is a template for the final result of task tree.
 The mission template:
 ?
 	->
 		(enable_auto_mode)
-		(collision_prevention)
 		?
-			(Find_target_object)
-			?
-				(explore_pattern_block_finished)
-				[explore_pattern_block]
-		?
-			(object_in_grasp_distance)
-			[approach_target]
-		?
-			(object_in_hand)
-			[human_operator_picking]
-		?
-			(return_finished)
-			[return]
+			(explore_pattern_block_finished)
+			[explore_pattern_block]
 	->
 		[Ask_for_human_help]
 
@@ -58,30 +56,17 @@ The result of final tree will look like:
 ?
 	->
 		(enable_auto_mode)
-		(collision_prevention)
-		?
-			(Find_target_object)
-			->
-				?
-					(explore_forward_is_finished)
-					[explore_forward]
-				?
-					(rotate_right_is_finished)
-					[rotate_right]
+		->
+			?
+				(explore_forward_finished)
+				[explore_forward]
+			?
+				(rotate_right_finished)
+				[rotate_right]
 
-				?
-					(explore_forward_is_finished)
-					[explore_forward]
-
-		?
-			(object_in_grasp_distance)
-			[approach_target]
-		?
-			(object_in_hand)
-			[human_operator_picking]
-		?
-			(return_finished)
-			[return]
+			?
+				(explore_forward_1_finished)
+				[explore_forward_1]
 	->
 		[Ask_for_human_help]
 

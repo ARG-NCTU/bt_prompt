@@ -14,18 +14,18 @@ Here is an example plan for inspection:
 	“explore_forward”
 	“rotate_right”
 	“explore_forward”
-And each subtree is consisting of a selector node with a condition node ({action}_is_finished) and action node [{action}] so we need to expand it:
+And each subtree is consisting of a selector node with a condition node ({action}_finished) and action node [{action}] so we need to expand it:
 expand inspection tree:
 ->
 	?
-		(explore_forward_is_finished)
+		(explore_forward_finished)
 		[explore_forward]
 	?
-		(rotate_right_is_finished)
+		(rotate_right_finished)
 		[rotate_right]
 
 	?
-		(explore_forward_is_finished)
+		(explore_forward_finished)
 		[explore_forward]
 
 After finish planning the inspection subtree we need to connect the subtree (replace the explore pattern block in tree) onto a large mission tree, which is a template for the final result of task tree.
@@ -60,14 +60,14 @@ The result of final tree will look like:
 			(Find_target_object)
 			->
 				?
-					(explore_forward_is_finished)
+					(explore_forward_finished)
 					[explore_forward]
 				?
-					(rotate_right_is_finished)
+					(rotate_right_finished)
 					[rotate_right]
 
 				?
-					(explore_forward_is_finished)
+					(explore_forward_finished)
 					[explore_forward]
 
 		?

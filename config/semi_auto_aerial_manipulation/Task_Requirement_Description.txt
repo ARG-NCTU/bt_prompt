@@ -1,3 +1,5 @@
-Now the drone is located at the right hand side of a bridge, and the drone is fly higher than the bridge so you just need to care about the x y plane search patten to move the to the bridge and start inspection.
-(The keypoint of Task Requirement Description: is our target area is at right hand side so we need to plan the path to front right first.)
-
+The drone is engaged in an emergency search and rescue mission.
+According to information from the ground rescue team, a missing person has been reported to be in the direction ahead and slightly to the left of the drone's current position.
+The person may have signaled using a reflective object or a small beacon, but due to challenging terrain or obstructed visibility, the exact location and distance are unknown.
+The drone should execute a zigzag search pattern resembling the shape of a lightning bolt.
+During the search, it is crucial that the drone does not move straight forward or directly towards the left more than twice, ensuring a thorough sweep of the area to locate the missing person and assist the ground team's rescue operation.
